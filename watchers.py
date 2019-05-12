@@ -12,13 +12,15 @@ def main():
 
     (options, args) = parser.parse_args()
 
-    if options.servername and options.logfile and len(args) == 1:
+    if options.servername and options.logfile and len(args) == 0:
         command = "ssh root@" + options.servername + " tail -f " + options.logfile
         # print(command)
         # print(len(args))
         subprocess.call(command, shell=True)
+    elif options.servername and options.logfile and len(args) != 0:
+        parser.error("Too many arguments")
     else:
-        parser.error("wrong number of arguments")
+        parser.error("Wrong number of arguments")
 
 
 if __name__ == "__main__":
