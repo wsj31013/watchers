@@ -25,16 +25,10 @@ def main():
         subprocess.call(command, shell=True)
     elif options.servername and options.logfile and options.logfile in tomcat and len(args) == 0 and len(sys.argv) == 5:
         command = "ssh root@" + options.servername + " tail -f " + tomcat
-        # print(command)
-        # print(len(args))
         subprocess.call(command, shell=True)      
     elif options.servername and options.logfile and len(args) != 0:
-        # print(len(args))
-        # print(len(sys.argv))
         parser.error("Too many arguments")
     else:
-        # print(len(args))
-        # print(len(sys.argv))
         parser.error("Wrong number of arguments")
 
 
