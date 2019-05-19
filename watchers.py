@@ -2,6 +2,9 @@
 from optparse import OptionParser
 import subprocess
 
+# Alias of argrument
+nginx = "/var/log/nginx/access.log"
+tomcat = "/var/lib/tomcat/logs/catalina.out"
 
 def main():
     usage = "usage: %prog -s arg1 -l arg2"
@@ -12,11 +15,16 @@ def main():
 
     (options, args) = parser.parse_args()
 
-    if options.servername and options.logfile and len(args) == 0:
-        command = "ssh root@" + options.servername + " tail -f " + options.logfile
+    if options.servername and options.logfile and options.logfile in nginx and len(args) == 0:
+        command = "ssh root@" + options.servername + " tail -f " + nginx
         # print(command)
         # print(len(args))
         subprocess.call(command, shell=True)
+    elif options.servername and options.logfile and options.logfile in tomcat and len(args) == 0:
+        command = "ssh root@" + options.servername + " tail -f " + tomcat
+        # print(command)
+        # print(len(args))
+        subprocess.call(command, shell=True)      
     elif options.servername and options.logfile and len(args) != 0:
         parser.error("Too many arguments")
     else:
